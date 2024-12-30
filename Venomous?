@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Check This Out!</title>
+</head>
+<body>
+    <h1>Click the button below for a surprise!</h1>
+    <button onclick="rickroll()">Click Me!</button>
+
+    <script>
+        function rickroll() {
+            window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+        }
+    </script>
+</body>
+</html>
