@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💰 Revenue System Access</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .access-box {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+        }
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: transform 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .status {
+            background: rgba(40, 167, 69, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .revenue {
+            font-size: 2em;
+            color: #28a745;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        .code {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💰 Automated Revenue System</h1>
+        
+        <div class="access-box">
+            <h2>🚀 Your System is Running!</h2>
+            <div class="status">
+                <p>✅ All 5 revenue streams are ACTIVE</p>
+                <p class="revenue" id="revenue">Making money right now...</p>
+            </div>
+            
+            <h3>📱 Access Methods:</h3>
+            
+            <div style="margin: 20px 0;">
+                <h4>Method 1: Click to Access Dashboard</h4>
+                <a href="http://localhost:8000" class="btn" target="_blank">🌐 Open Dashboard</a>
+                <a href="http://localhost:8000/docs" class="btn" target="_blank">📊 API Docs</a>
+            </div>
+            
+            <div style="margin: 20px 0;">
+                <h4>Method 2: Copy These URLs</h4>
+                <div class="code">
+                    Main Dashboard: http://localhost:8000<br>
+                    Revenue API: http://localhost:8000/api/revenue/summary<br>
+                    System Status: http://localhost:8000/api/status
+                </div>
+            </div>
+            
+            <div style="margin: 20px 0;">
+                <h4>Method 3: Terminal Commands</h4>
+                <div class="code">
+                    # Restart system:<br>
+                    ./start_money_maker.sh<br><br>
+                    # Check revenue:<br>
+                    curl http://localhost:8000/api/revenue/summary
+                </div>
+            </div>
+        </div>
+        
+        <div class="access-box">
+            <h3>🔧 Troubleshooting</h3>
+            <p>If localhost:8000 doesn't work, try:</p>
+            <ul style="text-align: left; max-width: 500px; margin: 0 auto;">
+                <li>Make sure the system is running: <code>./start_money_maker.sh</code></li>
+                <li>Try 127.0.0.1:8000 instead of localhost:8000</li>
+                <li>Check if another application is using port 8000</li>
+                <li>Restart your browser</li>
+                <li>If in a container/VM, use the container's IP address</li>
+            </ul>
+        </div>
+        
+        <div class="access-box">
+            <h3>💰 Current Status</h3>
+            <div id="status-info">
+                <p>🔄 Loading revenue data...</p>
+            </div>
+            <button onclick="checkStatus()" class="btn">🔄 Refresh Status</button>
+        </div>
+    </div>
+    
+    <script>
+        async function checkStatus() {
+            try {
+                const response = await fetch('http://localhost:8000/api/status');
+                const data = await response.json();
+                
+                document.getElementById('revenue').textContent = `$${data.revenue_today.toFixed(2)} earned today!`;
+                document.getElementById('status-info').innerHTML = `
+                    <p>✅ Status: ${data.status.toUpperCase()}</p>
+                    <p>💰 Revenue Today: $${data.revenue_today.toFixed(2)}</p>
+                    <p>🔧 Systems Active: ${data.systems_active}</p>
+                    <p>⏰ Last Update: ${new Date(data.timestamp).toLocaleString()}</p>
+                `;
+            } catch (error) {
+                document.getElementById('status-info').innerHTML = `
+                    <p>⚠️ Could not connect to revenue system</p>
+                    <p>Make sure the system is running: <code>./start_money_maker.sh</code></p>
+                `;
+            }
+        }
+        
+        // Auto-check status on load
+        checkStatus();
+        
+        // Auto-refresh every 10 seconds
+        setInterval(checkStatus, 10000);
+    </script>
+</body>
+</html>
