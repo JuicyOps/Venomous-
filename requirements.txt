@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+requests
+beautifulsoup4
+python-dotenv
+schedule
+aiofiles
+jinja2
+httpx
+aiohttp
